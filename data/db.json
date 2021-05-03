@@ -1,0 +1,22 @@
+{
+  "ids": {
+    "Artist": 1,
+    "Album": 2,
+    "Track": 4
+  },
+  "models": {
+    "Artist": {
+      "aG9sYWFzZHNhZGFzZHNhZG": "{\"id\":\"aG9sYWFzZHNhZGFzZHNhZG\",\"name\":\"holaasdsadasdsadas\",\"age\":25,\"albums\":\"/artists/aG9sYWFzZHNhZGFzZHNhZG/albums\",\"tracks\":\"/artists/aG9sYWFzZHNhZGFzZHNhZG/tracks\",\"self\":\"/artists/aG9sYWFzZHNhZGFzZHNhZG\"}"
+    },
+    "Album": {
+      "b25lOnVuZGVmaW5lZA==": "{\"id\":\"b25lOnVuZGVmaW5lZA==\",\"name\":\"one\",\"genre\":\"ss\",\"artist\":\"/artists/dmljaG8yMDAwMDA=\",\"tracks\":\"/albums/b25lOnVuZGVmaW5lZA==/tracks\",\"self\":\"/albums/b25lOnVuZGVmaW5lZA==\",\"artistId\":\"dmljaG8yMDAwMDA=\"}",
+      "dHdvOnVuZGVmaW5lZA==": "{\"id\":\"dHdvOnVuZGVmaW5lZA==\",\"name\":\"two\",\"genre\":\"ss\",\"artist\":\"/artists/dmljaG8yMDAwMDA=\",\"tracks\":\"/albums/dHdvOnVuZGVmaW5lZA==/tracks\",\"self\":\"/albums/dHdvOnVuZGVmaW5lZA==\",\"artistId\":\"dmljaG8yMDAwMDA=\"}"
+    },
+    "Track": {
+      "ZWluczpkSGR2T25WdVpHVm": "{\"id\":\"ZWluczpkSGR2T25WdVpHVm\",\"name\":\"eins\",\"duration\":3,\"times_played\":3,\"artist\":\"/artists/dmljaG8yMDAwMDA=\",\"album\":\"/albums/dHdvOnVuZGVmaW5lZA==\",\"self\":\"/tracks/ZWluczpkSGR2T25WdVpHVm\",\"albumId\":\"dHdvOnVuZGVmaW5lZA==\"}",
+      "c3dlaTpkSGR2T25WdVpHVm": "{\"id\":\"c3dlaTpkSGR2T25WdVpHVm\",\"name\":\"swei\",\"duration\":3,\"times_played\":2,\"artist\":\"/artists/dmljaG8yMDAwMDA=\",\"album\":\"/albums/dHdvOnVuZGVmaW5lZA==\",\"self\":\"/tracks/c3dlaTpkSGR2T25WdVpHVm\",\"albumId\":\"dHdvOnVuZGVmaW5lZA==\"}",
+      "ZHJlaTpiMjVsT25WdVpHVm": "{\"id\":\"ZHJlaTpiMjVsT25WdVpHVm\",\"name\":\"drei\",\"duration\":3,\"times_played\":1,\"artist\":\"/artists/dmljaG8yMDAwMDA=\",\"album\":\"/albums/b25lOnVuZGVmaW5lZA==\",\"self\":\"/tracks/ZHJlaTpiMjVsT25WdVpHVm\",\"albumId\":\"b25lOnVuZGVmaW5lZA==\"}",
+      "dmllcjpiMjVsT25WdVpHVm": "{\"id\":\"dmllcjpiMjVsT25WdVpHVm\",\"name\":\"vier\",\"duration\":3,\"times_played\":1,\"artist\":\"/artists/dmljaG8yMDAwMDA=\",\"album\":\"/albums/b25lOnVuZGVmaW5lZA==\",\"self\":\"/tracks/dmllcjpiMjVsT25WdVpHVm\",\"albumId\":\"b25lOnVuZGVmaW5lZA==\"}"
+    }
+  }
+}
