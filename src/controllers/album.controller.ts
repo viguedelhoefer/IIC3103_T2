@@ -1,3 +1,4 @@
+import {inject} from '@loopback/context';
 import {
   Filter,
   FilterExcludingWhere,
@@ -8,7 +9,8 @@ import {
   getModelSchemaRef, param, post,
   put,
   requestBody,
-  response
+  response,
+  Response, RestBindings
 } from '@loopback/rest';
 import {Album} from '../models';
 import {AlbumRepository, TrackRepository} from '../repositories';
@@ -19,6 +21,8 @@ export class AlbumController {
     public albumRepository: AlbumRepository,
     @repository(TrackRepository)
     public trackRepository: TrackRepository,
+    @inject(RestBindings.Http.RESPONSE)
+    public response: Response,
   ) { }
 
   @post('/albums')
@@ -69,10 +73,15 @@ export class AlbumController {
       },
     },
   })
+  @response(404, {
+    description: 'Not Found',
+  })
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Album, {exclude: 'where'}) filter?: FilterExcludingWhere<Album>
   ): Promise<Album> {
+    const valido = await this.albumRepository.exists(id);
+    valido ? this.response.status(200) : this.response.status(404).send();
     return this.albumRepository.findById(id, filter);
   }
 
@@ -80,9 +89,17 @@ export class AlbumController {
   @response(200, {
     description: 'Album PUT success',
   })
+  @response(404, {
+    description: 'Not Found',
+  })
   async updateById(
     @param.path.string('id') id: string,
   ): Promise<void> {
+    const valido = await this.albumRepository.exists(id);
+    if (!valido) {
+      this.response.status(404).send();
+      return;
+    }
     const tracks = await this.albumRepository.tracks(id).find();
     tracks.forEach(async (track) => {
       track.times_played!++;
@@ -95,9 +112,17 @@ export class AlbumController {
   @response(204, {
     description: 'Album DELETE success',
   })
+  @response(404, {
+    description: 'Not Found',
+  })
   async delete(
     @param.path.string('id') id: string,
   ): Promise<void> {
+    const valido = await this.albumRepository.exists(id);
+    if (!valido) {
+      this.response.status(404).send();
+      return;
+    }
     await this.albumRepository.tracks(id).delete();
     return this.albumRepository.deleteById(id);
   }

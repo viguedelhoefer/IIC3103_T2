@@ -1,3 +1,4 @@
+import {inject} from '@loopback/context';
 import {
   Filter,
   FilterExcludingWhere,
@@ -8,7 +9,9 @@ import {
   getModelSchemaRef, param, post,
   put,
   requestBody,
-  response
+  response,
+
+  Response, RestBindings
 } from '@loopback/rest';
 import {Artist} from '../models';
 import {
@@ -25,6 +28,8 @@ export class ArtistController {
     public albumRepository: AlbumRepository,
     @repository(TrackRepository)
     public trackRepository: TrackRepository,
+    @inject(RestBindings.Http.RESPONSE)
+    public response: Response,
   ) { }
 
   @post('/artists')
@@ -46,9 +51,9 @@ export class ArtistController {
     artist: Omit<Artist, 'id'>,
   ): Promise<Artist> {
     artist.id = Buffer.from(artist.name).toString('base64').slice(0, 22);
-    artist.self = `/artists/${artist.id}`;
-    artist.albums = `/artists/${artist.id}/albums`;
-    artist.tracks = `/artists/${artist.id}/tracks`;
+    artist.self = `https://stormy-badlands-49969.herokuapp.com/artists/${artist.id}`;
+    artist.albums = `https://stormy-badlands-49969.herokuapp.com//artists/${artist.id}/albums`;
+    artist.tracks = `https://stormy-badlands-49969.herokuapp.com//artists/${artist.id}/tracks`;
     return this.artistRepository.create(artist);
   }
 
@@ -79,10 +84,15 @@ export class ArtistController {
       },
     },
   })
+  @response(404, {
+    description: 'Not Found',
+  })
   async findById(
     @param.path.string('id') id: string,
     @param.filter(Artist, {exclude: 'where'}) filter?: FilterExcludingWhere<Artist>
   ): Promise<Artist> {
+    const valido = await this.artistRepository.exists(id);
+    valido ? this.response.status(200) : this.response.status(404).send();
     return this.artistRepository.findById(id, filter);
   }
 
@@ -90,9 +100,17 @@ export class ArtistController {
   @response(200, {
     description: 'Artist PUT success',
   })
+  @response(404, {
+    description: 'Not Found',
+  })
   async updateById(
     @param.path.string('id') id: string,
   ): Promise<void> {
+    const valido = await this.artistRepository.exists(id);
+    if (!valido) {
+      this.response.status(404).send();
+      return;
+    }
     const albums = await this.artistRepository.albums(id).find();
     albums.forEach(async (album) => {
       const tracks = await this.albumRepository.tracks(album.id).find();
@@ -108,9 +126,17 @@ export class ArtistController {
   @response(204, {
     description: 'Artist DELETE success',
   })
+  @response(404, {
+    description: 'Not Found',
+  })
   async delete(
     @param.path.string('id') id: string,
   ): Promise<void> {
+    const valido = await this.artistRepository.exists(id);
+    if (!valido) {
+      this.response.status(404).send();
+      return;
+    }
     const albums = await this.artistRepository.albums(id).find();
     albums.forEach(async (album) => {
       await this.albumRepository.tracks(album.id).delete()

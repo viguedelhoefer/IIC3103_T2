@@ -71,10 +71,10 @@ export class AlbumTrackController {
       where: {id: id},
     });
     track.id = Buffer.from(track.name + ":" + artist_id[0].id).toString('base64').slice(0, 22);
-    track.self = `/tracks/${track.id}`;
+    track.self = `https://stormy-badlands-49969.herokuapp.com/tracks/${track.id}`;
     track.times_played = 0;
-    track.album = `/albums/${id}`;
-    track.artist = `/artists/${artist_id[0].artistId}`;
+    track.album = `https://stormy-badlands-49969.herokuapp.com/albums/${id}`;
+    track.artist = `https://stormy-badlands-49969.herokuapp.com/artists/${artist_id[0].artistId}`;
     return this.albumRepository.tracks(id).create(track);
   }
 
